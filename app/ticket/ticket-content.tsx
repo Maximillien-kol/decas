@@ -18,22 +18,44 @@ export default function TicketPage() {
   const searchParams = useSearchParams()
   const [ticketData, setTicketData] = useState<TicketData | null>(null)
   const [isValid, setIsValid] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     // Get QR data from URL parameter
     const data = searchParams.get('data')
     
+    console.log('QR Data from URL:', data) // Debug log
+    
     if (data) {
       try {
         const decoded = JSON.parse(decodeURIComponent(data))
+        console.log('Decoded ticket data:', decoded) // Debug log
         setTicketData(decoded)
         setIsValid(true)
       } catch (error) {
         console.error('Invalid QR data:', error)
         setIsValid(false)
       }
+    } else {
+      console.log('No data parameter found in URL') // Debug log
+      setIsValid(false)
     }
+    setLoading(false)
   }, [searchParams])
+
+  if (loading) {
+    return (
+      <main className="min-h-screen flex items-center justify-center p-4 bg-gray-50">
+        <Card className="max-w-md w-full p-8 text-center bg-white border border-gray-200">
+          <div className="text-gray-500 mb-4">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 mx-auto"></div>
+          </div>
+          <h1 className="text-2xl font-bold text-black mb-2">Loading Ticket...</h1>
+          <p className="text-gray-600">Please wait while we verify your QR code</p>
+        </Card>
+      </main>
+    )
+  }
 
   if (!isValid || !ticketData) {
     return (
