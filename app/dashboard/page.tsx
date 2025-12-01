@@ -54,6 +54,11 @@ export default function DashboardPage() {
   const loadGuests = async () => {
     setIsLoading(true)
     try {
+      if (!supabase) {
+        alert('Database not configured. Please add Supabase credentials.')
+        return
+      }
+
       const { data, error } = await supabase
         .from('guests')
         .select('*')
@@ -71,6 +76,11 @@ export default function DashboardPage() {
 
   const updateGuestStatus = async (id: string, status: 'accepted' | 'rejected') => {
     try {
+      if (!supabase) {
+        alert('Database not configured')
+        return
+      }
+
       const { error } = await supabase
         .from('guests')
         .update({ status, updated_at: new Date().toISOString() })
@@ -108,14 +118,14 @@ export default function DashboardPage() {
 
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-purple-50 via-purple-100 to-pink-100">
-        <Card className="w-full max-w-md p-8 shadow-lg">
+      <main className="min-h-screen flex items-center justify-center p-4 bg-black">
+        <Card className="w-full max-w-md p-8 shadow-lg bg-gray-900 border border-gray-700">
           <div className="text-center mb-6">
-            <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Users className="w-8 h-8 text-purple-600" />
+            <div className="bg-gray-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Users className="w-8 h-8 text-green-500" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard Login</h1>
-            <p className="text-gray-600 mt-2">Enter password to access guest management</p>
+            <h1 className="text-2xl font-bold text-white">Dashboard Login</h1>
+            <p className="text-gray-400 mt-2">Enter password to access guest management</p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
@@ -124,10 +134,10 @@ export default function DashboardPage() {
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full"
+                className="w-full bg-gray-800 border-gray-600 text-white placeholder:text-gray-500 focus:border-green-500 focus:ring-green-500"
               />
             </div>
-            <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700">
+            <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white">
               Login
             </Button>
           </form>
@@ -137,18 +147,18 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-50 via-purple-100 to-pink-100 p-4 py-8">
+    <main className="min-h-screen bg-black p-4 py-8">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-purple-900">Guest Management</h1>
-            <p className="text-purple-700 mt-1">Decas' Day Registration Dashboard</p>
+            <h1 className="text-3xl font-bold text-white">Guest Management</h1>
+            <p className="text-gray-400 mt-1">Decas' Day Registration Dashboard</p>
           </div>
           <div className="flex gap-2">
             <Button 
               variant="outline"
-              className="border-purple-300 text-purple-700 hover:bg-purple-50"
+              className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
               onClick={loadGuests}
               disabled={isLoading}
             >
@@ -157,7 +167,7 @@ export default function DashboardPage() {
             </Button>
             <Button 
               variant="outline" 
-              className="border-purple-300 text-purple-700 hover:bg-purple-50"
+              className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
               onClick={() => setIsAuthenticated(false)}
             >
               Logout
@@ -167,66 +177,66 @@ export default function DashboardPage() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+          <Card className="p-6 bg-gray-900 shadow-sm hover:shadow-md transition-shadow border border-gray-700">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-purple-600 font-medium">Total Guests</p>
-                <p className="text-3xl font-bold text-purple-900 mt-1">{stats.total}</p>
+                <p className="text-sm text-gray-400 font-medium">Total Guests</p>
+                <p className="text-3xl font-bold text-white mt-1">{stats.total}</p>
               </div>
-              <div className="bg-purple-100 p-3 rounded-lg">
-                <Users className="w-6 h-6 text-purple-600" />
+              <div className="bg-gray-800 p-3 rounded-lg">
+                <Users className="w-6 h-6 text-gray-400" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+          <Card className="p-6 bg-gray-900 shadow-sm hover:shadow-md transition-shadow border border-gray-700">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-amber-600 font-medium">Pending</p>
-                <p className="text-3xl font-bold text-amber-700 mt-1">{stats.pending}</p>
+                <p className="text-sm text-gray-400 font-medium">Pending</p>
+                <p className="text-3xl font-bold text-white mt-1">{stats.pending}</p>
               </div>
-              <div className="bg-amber-100 p-3 rounded-lg">
-                <Clock className="w-6 h-6 text-amber-600" />
+              <div className="bg-gray-800 p-3 rounded-lg">
+                <Clock className="w-6 h-6 text-gray-400" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+          <Card className="p-6 bg-gray-900 shadow-sm hover:shadow-md transition-shadow border border-green-600">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-emerald-600 font-medium">Accepted</p>
-                <p className="text-3xl font-bold text-emerald-700 mt-1">{stats.accepted}</p>
+                <p className="text-sm text-green-400 font-medium">Accepted</p>
+                <p className="text-3xl font-bold text-green-500 mt-1">{stats.accepted}</p>
               </div>
-              <div className="bg-emerald-100 p-3 rounded-lg">
-                <CheckCircle className="w-6 h-6 text-emerald-600" />
+              <div className="bg-green-900 p-3 rounded-lg">
+                <CheckCircle className="w-6 h-6 text-green-500" />
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+          <Card className="p-6 bg-gray-900 shadow-sm hover:shadow-md transition-shadow border border-gray-700">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-rose-600 font-medium">Rejected</p>
-                <p className="text-3xl font-bold text-rose-700 mt-1">{stats.rejected}</p>
+                <p className="text-sm text-gray-400 font-medium">Rejected</p>
+                <p className="text-3xl font-bold text-white mt-1">{stats.rejected}</p>
               </div>
-              <div className="bg-rose-100 p-3 rounded-lg">
-                <X className="w-6 h-6 text-rose-600" />
+              <div className="bg-gray-800 p-3 rounded-lg">
+                <X className="w-6 h-6 text-gray-400" />
               </div>
             </div>
           </Card>
         </div>
 
         {/* Filters and Search */}
-        <Card className="p-4 bg-white shadow-sm">
+        <Card className="p-4 bg-gray-900 shadow-sm border border-gray-700">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-purple-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
                 <Input
                   placeholder="Search by name, email, phone, or ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 border-purple-200 focus:border-purple-400 focus:ring-purple-400"
+                  className="pl-10 bg-gray-800 border-gray-600 text-white placeholder:text-gray-500 focus:border-green-500 focus:ring-green-500"
                 />
               </div>
             </div>
@@ -234,28 +244,28 @@ export default function DashboardPage() {
               <Button
                 variant={filter === 'all' ? 'default' : 'outline'}
                 onClick={() => setFilter('all')}
-                className={filter === 'all' ? 'bg-purple-600 hover:bg-purple-700' : 'border-purple-200 text-purple-700 hover:bg-purple-50'}
+                className={filter === 'all' ? 'bg-white hover:bg-gray-200 text-black' : 'border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white'}
               >
                 All
               </Button>
               <Button
                 variant={filter === 'pending' ? 'default' : 'outline'}
                 onClick={() => setFilter('pending')}
-                className={filter === 'pending' ? 'bg-amber-600 hover:bg-amber-700' : 'border-amber-200 text-amber-700 hover:bg-amber-50'}
+                className={filter === 'pending' ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white'}
               >
                 Pending
               </Button>
               <Button
                 variant={filter === 'accepted' ? 'default' : 'outline'}
                 onClick={() => setFilter('accepted')}
-                className={filter === 'accepted' ? 'bg-emerald-600 hover:bg-emerald-700' : 'border-emerald-200 text-emerald-700 hover:bg-emerald-50'}
+                className={filter === 'accepted' ? 'bg-green-600 hover:bg-green-700 text-white' : 'border-green-600 text-green-400 hover:bg-green-900 hover:text-green-300'}
               >
                 Accepted
               </Button>
               <Button
                 variant={filter === 'rejected' ? 'default' : 'outline'}
                 onClick={() => setFilter('rejected')}
-                className={filter === 'rejected' ? 'bg-rose-600 hover:bg-rose-700' : 'border-rose-200 text-rose-700 hover:bg-rose-50'}
+                className={filter === 'rejected' ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white'}
               >
                 Rejected
               </Button>
@@ -266,55 +276,55 @@ export default function DashboardPage() {
         {/* Guest List */}
         <div className="space-y-4">
           {isLoading ? (
-            <Card className="p-12 text-center bg-white shadow-sm">
-              <RefreshCw className="w-12 h-12 text-purple-600 mx-auto mb-4 animate-spin" />
-              <p className="text-purple-700 font-medium">Loading guests...</p>
+            <Card className="p-12 text-center bg-gray-900 shadow-sm border border-gray-700">
+              <RefreshCw className="w-12 h-12 text-green-500 mx-auto mb-4 animate-spin" />
+              <p className="text-white font-medium">Loading guests...</p>
             </Card>
           ) : filteredGuests.length === 0 ? (
-            <Card className="p-12 text-center bg-white shadow-sm">
-              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-purple-600" />
+            <Card className="p-12 text-center bg-gray-900 shadow-sm border border-gray-700">
+              <div className="bg-gray-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-gray-400" />
               </div>
-              <p className="text-purple-700 font-medium">No guests found</p>
-              <p className="text-purple-500 text-sm mt-1">Try adjusting your search or filters</p>
+              <p className="text-white font-medium">No guests found</p>
+              <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filters</p>
             </Card>
           ) : (
             filteredGuests.map((guest) => (
-              <Card key={guest.id} className="p-6 bg-white shadow-sm hover:shadow-md transition-shadow">
+              <Card key={guest.id} className="p-6 bg-gray-900 shadow-sm hover:shadow-md transition-shadow border border-gray-700">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="flex-1 space-y-3">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-lg font-semibold text-gray-900">
+                      <h3 className="text-lg font-semibold text-white">
                         {guest.first_name} {guest.last_name}
                       </h3>
                       <Badge 
                         className={
                           guest.status === 'accepted' 
-                            ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-100' 
+                            ? 'bg-green-900 text-green-300 hover:bg-green-900 border border-green-600' 
                             : guest.status === 'rejected'
-                            ? 'bg-rose-100 text-rose-800 hover:bg-rose-100'
-                            : 'bg-amber-100 text-amber-800 hover:bg-amber-100'
+                            ? 'bg-gray-800 text-gray-400 hover:bg-gray-800 border border-gray-600'
+                            : 'bg-gray-800 text-gray-300 hover:bg-gray-800 border border-gray-600'
                         }
                       >
                         {guest.status.charAt(0).toUpperCase() + guest.status.slice(1)}
                       </Badge>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-400">
                       <div className="flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-purple-500" />
+                        <Mail className="w-4 h-4 text-gray-500" />
                         <span>{guest.email}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-purple-500" />
+                        <Phone className="w-4 h-4 text-gray-500" />
                         <span>{guest.telephone}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-purple-500" />
+                        <Calendar className="w-4 h-4 text-gray-500" />
                         <span>{new Date(guest.timestamp).toLocaleString()}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded">
+                        <span className="font-mono text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded border border-gray-600">
                           {guest.registration_id}
                         </span>
                       </div>
@@ -325,7 +335,7 @@ export default function DashboardPage() {
                     <div className="flex gap-2">
                       <Button
                         size="sm"
-                        className="bg-emerald-600 text-white hover:bg-emerald-700"
+                        className="bg-green-600 text-white hover:bg-green-700"
                         onClick={() => updateGuestStatus(guest.id, 'accepted')}
                       >
                         <Check className="w-4 h-4 mr-1" />
@@ -333,7 +343,7 @@ export default function DashboardPage() {
                       </Button>
                       <Button
                         size="sm"
-                        className="bg-rose-600 text-white hover:bg-rose-700"
+                        className="bg-gray-700 text-white hover:bg-gray-600 border border-gray-600"
                         onClick={() => updateGuestStatus(guest.id, 'rejected')}
                       >
                         <X className="w-4 h-4 mr-1" />

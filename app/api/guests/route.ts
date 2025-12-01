@@ -4,6 +4,13 @@ import { supabase } from '@/lib/supabase'
 // Get all guests
 export async function GET() {
   try {
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 503 }
+      )
+    }
+
     const { data, error } = await supabase
       .from('guests')
       .select('*')
@@ -24,6 +31,13 @@ export async function GET() {
 // Create new guest
 export async function POST(request: NextRequest) {
   try {
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 503 }
+      )
+    }
+
     const body = await request.json()
 
     const { data, error } = await supabase
@@ -56,6 +70,13 @@ export async function POST(request: NextRequest) {
 // Update guest status
 export async function PATCH(request: NextRequest) {
   try {
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 503 }
+      )
+    }
+
     const body = await request.json()
     const { id, status } = body
 

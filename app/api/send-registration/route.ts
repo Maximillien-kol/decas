@@ -103,26 +103,28 @@ export async function POST(request: NextRequest) {
 
     if (userEmailResult.success && adminEmailResult.success) {
       // Save guest to Supabase
-      try {
-        const { error: dbError } = await supabase
-          .from('guests')
-          .insert([
-            {
-              first_name: firstName,
-              last_name: lastName,
-              email: email,
-              telephone: telephone,
-              registration_id: registrationData.registrationId,
-              timestamp: registrationData.timestamp,
-              status: 'pending',
-            },
-          ]);
+      if (supabase) {
+        try {
+          const { error: dbError } = await supabase
+            .from('guests')
+            .insert([
+              {
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                telephone: telephone,
+                registration_id: registrationData.registrationId,
+                timestamp: registrationData.timestamp,
+                status: 'pending',
+              },
+            ]);
 
-        if (dbError) {
-          console.error('Error saving to Supabase:', dbError);
+          if (dbError) {
+            console.error('Error saving to Supabase:', dbError);
+          }
+        } catch (dbError) {
+          console.error('Supabase error:', dbError);
         }
-      } catch (dbError) {
-        console.error('Supabase error:', dbError);
       }
 
       return NextResponse.json({
