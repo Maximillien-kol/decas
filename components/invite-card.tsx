@@ -83,25 +83,22 @@ export default function InviteCard({ guestName, registrationId }: InviteCardProp
                         {/* Bottom Event Details */}
                         <div className="space-y-4">
                             <p className="text-gray-200 text-xs md:text-sm tracking-wide leading-relaxed">
-                                PLEASE JOIN US FOR A SURPRISE<br />
-                                BIRTHDAY PARTY<br />
-                                TO CELEBRATE <span className="font-semibold text-white">ANNA'S</span><br />
-                                <span className="text-xl md:text-2xl font-bold text-white">25TH BIRTHDAY</span>
+                                THANK YOU FOR JOINING US<br />
+                                FOR A BIRTHDAY PARTY<br />
+                                TO CELEBRATE <span className="font-semibold text-white">DECAS'S</span><br />
+                                <span className="text-xl md:text-2xl font-bold text-white">BIRTHDAY</span>
                             </p>
 
                             <div className="my-4">
                                 <p className="text-gray-300 text-xs tracking-widest mb-2">SATURDAY</p>
                                 <div className="flex items-center justify-center gap-2">
                                     <span className="text-gray-200 text-base md:text-lg">AUG</span>
-                                    <span className="text-white text-3xl md:text-4xl font-bold">|12|</span>
-                                    <span className="text-gray-200 text-base md:text-lg">8PM</span>
+                                    <span className="text-white text-3xl md:text-4xl font-bold">|13|</span>
+                                    <span className="text-gray-200 text-base md:text-lg">3PM</span>
                                 </div>
                             </div>
 
-                            <div className="space-y-1">
-                                <p className="text-white text-sm font-medium">Lima Lima Disco Club</p>
-                                <p className="text-gray-300 text-xs">5632 Mount Lake</p>
-                            </div>
+                            
 
                             <div className="pt-3">
                                 <p className="text-gray-300 text-xs">RSVP 435-223-543</p>
