@@ -416,7 +416,7 @@ export default function DashboardPage() {
             {isLoading ? (
               <div className="p-12 text-center">
                 <RefreshCw className="w-12 h-12 text-blue-600 mx-auto mb-4 animate-spin" />
-                <p className="text-gray-600 font-medium">Loading guests...</p>
+                <p className="text-gray-600 font-medium">Loading guest...</p>
               </div>
             ) : filteredGuests.length === 0 ? (
               <div className="p-12 text-center">
