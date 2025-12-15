@@ -93,7 +93,7 @@ export default function InviteCard({ guestName, registrationId }: InviteCardProp
                                 <p className="text-gray-300 text-xs tracking-widest mb-2">SATURDAY</p>
                                 <div className="flex items-center justify-center gap-2">
                                     <span className="text-gray-200 text-base md:text-lg">AUG</span>
-                                    <span className="text-white text-3xl md:text-4xl font-bold">|13|</span>
+                                    <span className="text-white text-3xl md:text-4xl font-bold">|20|</span>
                                     <span className="text-gray-200 text-base md:text-lg">3PM</span>
                                 </div>
                             </div>
