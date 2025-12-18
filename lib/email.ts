@@ -52,13 +52,9 @@ export const emailTemplates = {
                 <p><strong>Amount Paid:</strong> <span class="highlight">10,500 FRW</span></p>
               </div>
 
-              <h3>🎫 Your QR Code Ticket</h3>
-              <div style="text-align: center; margin: 30px 0;">
-                <p style="margin-bottom: 15px;">Present this QR code at the entrance:</p>
-                <img src="cid:qrcode" alt="Your QR Code Ticket" style="max-width: 300px; border: 2px solid #667eea; border-radius: 10px; padding: 10px; background: white;" />
-              </div>
-
-              <p><strong>Important:</strong> Save this email or take a screenshot of your QR code. You'll need to show it at the event entrance.</p>
+              <h3>📧 Next Steps</h3>
+              <p>Your ticket will be sent to you shortly via email. Please keep an eye on your inbox for your entry QR code.</p>
+              <p><strong>Important:</strong> Make sure to save the QR code when you receive it. You'll need to show it at the event entrance.</p>
               
               <div class="footer">
                 <p>This is an automated message from Decas' Day Registration System</p>
@@ -82,7 +78,7 @@ export const emailTemplates = {
       - Phone: ${data.telephone}
       - Amount Paid: 10,500 FRW
       
-      Your unique QR code ticket is attached to this email. Please save it and present it at the event entrance.
+      Your ticket will be sent to you shortly via email. Please save the QR code when you receive it and present it at the event entrance.
       
       If you have any questions, feel free to reach out to us.
     `,
@@ -128,7 +124,7 @@ export const emailTemplates = {
               <ul>
                 <li>Verify the payment screenshot</li>
                 <li>Approve or reject the registration</li>
-                <li>Send QR code and location details upon approval</li>
+                <li>Manually generate and send QR code upon approval</li>
               </ul>
             </div>
           </div>
@@ -148,16 +144,16 @@ export const emailTemplates = {
       Action Required:
       - Verify the payment screenshot
       - Approve or reject the registration
-      - Send QR code and location details upon approval
+      - Manually generate and send QR code upon approval
     `,
   }),
 };
 
 // Send email function
 export async function sendEmail(
-  to: string, 
-  subject: string, 
-  html: string, 
+  to: string,
+  subject: string,
+  html: string,
   text: string,
   attachments?: Array<{
     filename: string;

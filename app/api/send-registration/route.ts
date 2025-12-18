@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendEmail, emailTemplates } from '@/lib/email';
 import { supabase } from '@/lib/supabase';
-import QRCode from 'qrcode';
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-    
+
     const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
     const email = formData.get('email') as string;
@@ -23,8 +22,8 @@ export async function POST(request: NextRequest) {
 
     // Convert payment screenshot to buffer for email attachment
     const paymentBuffer = Buffer.from(await paymentScreenshot.arrayBuffer());
-    
-    // Generate unique QR code data
+
+    // Generate unique registration data
     const registrationData = {
       firstName,
       lastName,
@@ -34,29 +33,12 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     };
 
-    // Create URL with ticket data
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const ticketUrl = `${baseUrl}/ticket?data=${encodeURIComponent(JSON.stringify(registrationData))}`;
-
-    // Generate QR code as buffer (linking to ticket page)
-    const qrCodeBuffer = await QRCode.toBuffer(ticketUrl, {
-      width: 400,
-      margin: 2,
-      color: {
-        dark: '#000000',
-        light: '#FFFFFF',
-      },
-    });
-
-    // Prepare attachments for user email (QR code)
-    const userAttachments = [
-      {
-        filename: 'qr-code-ticket.png',
-        content: qrCodeBuffer,
-        contentType: 'image/png',
-        cid: 'qrcode', // Content ID for embedding in HTML
-      },
-    ];
+    // Prepare attachments for user email (removed QR code - sent manually)
+    const userAttachments: Array<{
+      filename: string;
+      content: Buffer;
+      contentType: string;
+    }> = [];
 
     // Prepare attachments for admin email (payment screenshot)
     const adminAttachments = [
@@ -83,13 +65,12 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toLocaleString(),
     });
 
-    // Send email to user (with QR code attachment)
+    // Send email to user (no attachments - QR code sent manually)
     const userEmailResult = await sendEmail(
       email,
       userEmail.subject,
       userEmail.html,
-      userEmail.text,
-      userAttachments
+      userEmail.text
     );
 
     // Send notification to admin (with payment screenshot attachment)

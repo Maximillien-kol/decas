@@ -121,7 +121,7 @@ export default function BirthdayRegistrationForm() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-accent font-medium">4.</span>
-              Once approved, you'll receive your QR code ticket
+              Your payment will be verified and QR code ticket sent to your email
             </li>
             <li className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-accent shrink-0" />
