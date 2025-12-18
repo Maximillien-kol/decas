@@ -37,7 +37,7 @@ export const emailTemplates = {
         <body>
           <div class="container">
             <div class="header">
-              <h1>🎉 Registration Received!</h1>
+              <h1>Registration Received!</h1>
               <p>Thank you for registering for Decas' Day</p>
             </div>
             <div class="content">
@@ -49,7 +49,6 @@ export const emailTemplates = {
                 <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
                 <p><strong>Email:</strong> ${data.email}</p>
                 <p><strong>Phone:</strong> ${data.telephone}</p>
-                <p><strong>Amount Paid:</strong> <span class="highlight">10,500 FRW</span></p>
               </div>
 
               <h3>📧 Next Steps</h3>
